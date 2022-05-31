@@ -11,28 +11,28 @@ public class JDBCDemo {
         String pass ="";
         
         
-        String query = "select * from student";
+//        String query = "insert into student(id, fname, lname, phone, class) values(?, ?, ?, ?, ?)// This is for inserting
+//          String query = "select phone from student";
+//            String query = "update student set phone = ? where id = 2";
+          String query = "delete from student where id = ?";
+          
+          
         
         
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(url, uname, pass);
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(query);
+        PreparedStatement pres = con.prepareStatement(query);
+//        Statement st = con.createStatement();
+//        ResultSet rs = st.executeQuery(query);
+
         
-        String fname = "";
-        String lname = "";
-        
-        while(rs.next()){
-            fname = rs.getString("fname");
-            lname = rs.getString("lname");
-            
-            System.out.println(fname+" "+lname);
-        }
+        pres.setInt(1, 3);
+       
+        pres.executeUpdate();
         
         
         
-        
-        st.close();
+        pres.close();
         con.close();
         
         
